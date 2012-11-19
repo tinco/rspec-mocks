@@ -195,6 +195,13 @@ module RSpec
             klass.any_instance.stub(:foo) { 1 + 2 }
             klass.new.foo.should eq(klass.new.foo)
           end
+
+          it "executes the method in the scope of the stubbed object" do
+            klass.any_instance.stub(:foo) { @a = true }
+            instance = klass.new
+            instance.foo
+            instance.instance_variable_get(:@a).should be_true
+          end
         end
 
         context "core ruby objects" do
