@@ -119,7 +119,7 @@ module RSpec
       end
 
       # @private
-      def message_received(message, *args, &block)
+      def message_received(instance, message, *args, &block)
         expectation = find_matching_expectation(message, *args)
         stub = find_matching_method_stub(message, *args)
 
@@ -128,7 +128,7 @@ module RSpec
           if expectation = find_almost_matching_expectation(message, *args)
             expectation.advise(*args) unless expectation.expected_messages_received?
           end
-          stub.invoke(*args, &block)
+          stub.invoke(instance, *args, &block)
         elsif expectation
           expectation.invoke(*args, &block)
         elsif expectation = find_almost_matching_expectation(message, *args)

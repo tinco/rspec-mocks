@@ -197,10 +197,10 @@ module RSpec
           end
 
           it "executes the method in the scope of the stubbed object" do
-            klass.any_instance.stub(:foo) { @a = true }
+            klass.any_instance.stub(:foo) { @bar = true }
             instance = klass.new
             instance.foo
-            instance.instance_variable_get(:@a).should be_true
+            instance.instance_variable_get(:@bar).should be_true
           end
         end
 

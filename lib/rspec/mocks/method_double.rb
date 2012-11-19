@@ -133,7 +133,7 @@ module RSpec
 
         object_singleton_class.class_eval <<-EOF, __FILE__, __LINE__ + 1
           def #{@method_name}(*args, &block)
-            __mock_proxy.message_received :#{@method_name}, *args, &block
+            __mock_proxy.message_received self, :#{@method_name}, *args, &block
           end
           #{visibility_for_method}
         EOF

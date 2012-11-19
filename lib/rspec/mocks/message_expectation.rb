@@ -447,8 +447,10 @@ module RSpec
         @value[[@actual_received_count, @value.size-1].min]
       end
 
-      def call_implementation(*args, &block)
-        @implementation.arity == 0 ? @implementation.call(&block) : @implementation.call(*args, &block)
+      def call_implementation(instance, *args, &block)
+        @implementation.arity == 0 ?
+          instance.instance_exec(&@implementation) :
+          instance.instance_exec(*args, &@implementation)
       end
 
       def clone_args_to_yield(*args)
